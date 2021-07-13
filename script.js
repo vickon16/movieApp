@@ -85,7 +85,7 @@ class UI {
     <div class="movie-popup-header">
       <img src="${IMGPATH + item.poster_path}" alt="${IMGPATH + item.poster_path}"><span class="playBtn"><i class="fas fa-play-circle"></i></span>
       <div class="movie-title"><h2>${item.original_title} (<span>${item.release_date.slice(0, 4)}</span>)</h2>
-      <p>${item.release_date}</p></div>
+      <p>Released : ${item.release_date}</p></div>
     </div>
     <div class="movie-popup-func">
       <div class="watched"><span class="watchedBtn"><i class="fas fa-check"></i></span><p>set watched<span class="watched-id">( ${item.id} )</span></p></div>

@@ -6,6 +6,7 @@
 :root {
   --border: 1px solid white;
   --white: #eee;
+  font-size: 15px;
 }
 ul {
   padding: 0;
@@ -27,7 +28,7 @@ body {
 }
 .container {
   max-width: 100%;
-  height: 90vh;
+  height: 95vh;
   width: 450px;
   margin: 0 auto;
   overflow: auto;
@@ -100,7 +101,7 @@ main.close {
   margin-right: .3rem;
 }
 .buttons {
-  padding: .3rem .2rem 1rem;
+  padding: .3rem .5rem 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.253);
   border-radius: 10px;
 }
@@ -110,7 +111,7 @@ main.close {
   font-size: 1.05rem;
   border:none;
   border-radius: 10%;
-  margin-right: .5rem;
+  margin: 0 .5rem .7rem 0;
   transition: 500ms;
 }
 .buttons button:nth-child(1) {
@@ -156,6 +157,7 @@ main.close {
 }
 .movie-body .movie-content .movie-img img {
   height: 100%;
+  width: 100%;
   cursor: pointer;
 }
 .movie-body .movie-content .movie-info {
@@ -212,8 +214,9 @@ main.close {
 .movie-popup-overlay {
   position: fixed;
   top:0; left:0; right:0; bottom: 0;
-  height: 90vh;
+  height: 100vh;
   width: 450px;
+  max-width: 100%;
   z-index: 2;
   background-color: #373b699b;
   margin: 2.5rem auto 0;
@@ -234,7 +237,7 @@ main.close {
 .movie-popup {
   width: 100%;
   background-color: #262626;
-  padding: .5rem .5rem 1rem;
+  padding: .5rem .8rem 2rem;
   transform: translateY(26%);
   position: relative;
   transition: 500ms;
@@ -299,6 +302,9 @@ span.playBtn:hover {
   padding: .3rem .5rem;
   border-radius: 4px;
   cursor: pointer;
+}
+.watched, .collection {
+  padding: .8rem 0 0 0;
 }
 .watchedBtn.watched-movie{
   background-color: #373b69;
@@ -373,7 +379,7 @@ span.watched-id {
 .movie-popup .close-btn {
   position:absolute;
   top:-2.5rem;
-  right: .5rem;
+  right: .8rem;
   color: var(--white);
   font-size: 1.2rem;
   cursor: pointer;
@@ -397,6 +403,7 @@ span.watched-id {
   visibility: hidden;
   transition: 500ms;
   padding: .8rem;
+  padding: 1rem;
 }
 .collection-popup.show {
   transform: translateX(0%);
@@ -430,29 +437,18 @@ span.watched-id {
 .collection-popup .close-btn:hover i {
   transform: scale(1.2);
 }
-.collection-popup .buttons {
-  padding: .3rem .5rem 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.253);
-  border-radius: 10px;
+.collection-popup .collection-para {
+  color: chartreuse;
+  font-size: 1.5rem;
+  padding: 0 .2rem;
+  font-weight: 600;
 }
-.collection-popup .buttons button {
-  cursor: pointer;
-  padding: .3rem 1rem;
-  font-size: 1.05rem;
-  border:none;
-  border-radius: 10%;
-  margin-right: .5rem;
-  transition: 500ms;
-}
-.collection-popup .buttons button:nth-child(1) {
-  background-color: turquoise;
-}
-
 .collection-popup .collection-body {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   align-items: center;
   gap: .8rem;
+  padding: 1rem 0;
 }
 .collection-popup .collection-content {
   display: flex;
@@ -512,4 +508,38 @@ span.watched-id {
 }
 .collection-popup .collection-body .collection-content .collection-rating span i.dark {
   color: grey;
+}
+
+
+@media screen and (max-width: 450px) {
+  :root {
+    font-size: 14px;
+  }
+
+  .container {
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .movie-content {
+    gap: .3rem;
+  }
+  .movie-body .movie-content .movie-img {
+    width: 45px;
+    height: 60px;
+  }
+
+}
+
+@media screen and (max-width: 300px) {
+  :root {
+    font-size: 12px;
+  }
+
+  .collection-div ul {
+    background-color: #373b69;
+    width: 120px;
+    padding: 1rem 0;
+    border-radius: 4px 0 0 4px;
+  }
 }
