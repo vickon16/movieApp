@@ -1,0 +1,515 @@
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+}
+:root {
+  --border: 1px solid white;
+  --white: #eee;
+}
+ul {
+  padding: 0;
+  list-style: none;
+}
+img {
+  max-width: 100%;
+  object-fit: cover;
+  display: block;
+}
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  background-color: #373b69;
+  font-family: "lato", sans-serif;
+}
+.container {
+  max-width: 100%;
+  height: 90vh;
+  width: 450px;
+  margin: 0 auto;
+  overflow: auto;
+  background-color: #262626;
+  border-radius: 10px;
+  padding: 0 .5rem;
+  position: relative;
+}
+main {
+  width: 100%;
+}
+main.close {
+  display: none;
+}
+.movie {
+  width: 100%;
+  z-index:0;
+}
+.movie .movie-header {
+  padding: .7rem 0 .2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.movie .menu {
+  margin-right: 1rem;
+  font-size: 1.3rem;
+  color: var(--white);
+  cursor: pointer;
+  padding: .4rem;
+}
+.movie h2.main-heading {
+  font-size: 1.2rem;
+  padding: 1.7rem .8rem;
+  color: var(--white);
+}
+.movie h2.main-heading span {
+  color: rgb(27, 216, 27);
+  margin: 0 .3rem;
+}
+.collection-div {
+  position: absolute;
+  bottom: -.5rem;
+  right: 2rem;
+  display: none;
+  z-index: 6;
+  user-select: none;
+}
+.collection-div.show {
+  display: block;
+}
+.collection-div ul {
+  background-color: #373b69;
+  width: 150px;
+  padding: 1rem 0;
+  border-radius: 4px 0 0 4px;
+}
+.collection-div ul li {
+  color: wheat;
+  cursor: pointer;
+  padding: .4rem .6rem;
+  transition: 400ms;
+}
+.collection-div ul li:hover {
+  background-color: rgba(147, 112, 216, 0.507);
+}
+.collection-div ul li span {
+  margin-right: .3rem;
+}
+.buttons {
+  padding: .3rem .2rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.253);
+  border-radius: 10px;
+}
+.buttons button {
+  cursor: pointer;
+  padding: .3rem 1rem;
+  font-size: 1.05rem;
+  border:none;
+  border-radius: 10%;
+  margin-right: .5rem;
+  transition: 500ms;
+}
+.buttons button:nth-child(1) {
+  background-color: turquoise;
+}
+.buttons button:nth-child(2) {
+  background-color: chartreuse;
+}
+.buttons button:nth-child(3) {
+  background-color: chocolate;
+}
+.buttons button:hover {
+  transform: scale(1.05);
+}
+.movie .respond {
+  color: var(--white);
+  padding: 1rem .5rem 1rem;
+  font-size: 1.2rem;
+}
+.movie-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.movie-content {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  width: 100%;
+  gap: .5rem;
+  align-items: center;
+  padding: .2rem .4rem;
+  margin-bottom: .5rem;
+  cursor: pointer;
+  transition: 500ms;
+  border-radius: 2px;
+}
+.movie-content:hover {
+  background-color: #373b69be;
+}
+.movie-body .movie-content .movie-img {
+  width: 65px;
+  height: 80px;
+}
+.movie-body .movie-content .movie-img img {
+  height: 100%;
+  cursor: pointer;
+}
+.movie-body .movie-content .movie-info {
+  padding: .5rem;
+  color: var(--white);
+}
+.movie-body .movie-content .movie-info h3 {
+  font-weight: 400;
+  letter-spacing: 0.1rem;
+  font-size: 1rem;
+  line-height: 1.3rem;
+  color: rgb(214, 214, 137);
+}
+.movie-body .movie-content .movie-info h3 span {
+  font-size: .6rem;
+  background-color: mediumpurple;
+  padding:.1rem;
+  border-radius: 2px;
+  display: none;
+}
+.movie-body .movie-content .movie-info h3 span.show {
+  display: inline;
+}
+
+.movie-body .movie-content .movie-info p {
+  font-size: 0.8rem;
+  font-weight: 300;
+  margin: .6rem 0;
+}
+
+.movie-body .movie-content .movie-info p.release-date {
+  color: #aaa;
+}
+.movie-body .movie-content .movie-info p span.lang {
+  color: chartreuse;
+  font-size: .8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.movie-body .movie-content .movie-rating {
+  padding: 0 .5rem;
+  color: chartreuse;
+}
+.movie-body .movie-content .movie-rating span:first-child {
+  font-size: .7rem;
+  vertical-align: middle;
+  color: yellow;
+}
+.movie-body .movie-content .movie-rating span i.dark {
+  color: grey;
+}
+
+
+.movie-popup-overlay {
+  position: fixed;
+  top:0; left:0; right:0; bottom: 0;
+  height: 90vh;
+  width: 450px;
+  z-index: 2;
+  background-color: #373b699b;
+  margin: 2.5rem auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  transform: scale(1);
+  visibility: visible;
+  opacity: 1;
+  transition: 500ms;
+}
+.movie-popup-overlay.close {
+  transform: scale(.2);
+  visibility: hidden;
+  opacity: 0;
+}
+.movie-popup {
+  width: 100%;
+  background-color: #262626;
+  padding: .5rem .5rem 1rem;
+  transform: translateY(26%);
+  position: relative;
+  transition: 500ms;
+  visibility: visible;
+  opacity: 1;
+}
+.movie-popup.close {
+  transform: translateY(120%);
+  visibility: hidden;
+  opacity: 0;
+}
+.movie-popup .movie-popup-header {
+  padding: .4rem 0;
+  width: 100%;
+  position: relative;
+}
+.movie-popup img {
+  width:  100%;
+  height: 400px;
+  border-radius: 5px;
+}
+span.playBtn {
+  position: absolute;
+  color: white;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  transition: 400ms;
+  cursor: pointer;
+  z-index: 4;
+}
+span.playBtn:hover {
+  color: chartreuse;
+}
+.movie-popup .movie-title h2 {
+  padding: 1.2rem .5rem 0.2rem;
+  color: var(--white);
+}
+.movie-popup .movie-title h2 span {
+  color: chartreuse;
+}
+.movie-popup .movie-title p {
+  color: #aaa;
+  font-weight: 300;
+  font-size: 0.9rem;
+  padding: .5rem;
+}
+.movie-popup .movie-popup-func {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: .5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.26);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 8px;
+}
+.watched span, .collection span{
+  color: white;
+  font-size: 1.1rem;
+  padding: .3rem .5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.watchedBtn.watched-movie{
+  background-color: #373b69;
+}
+.collectionBtn.collected{
+  background-color: crimson;
+}
+span.watched-id {
+  color: chartreuse;
+  font-size: .75rem;
+}
+
+.watched p, .collection p {
+  font-size: .8rem;
+  color: #ccc;
+  margin: .7rem 0;
+  text-transform: uppercase;
+}
+.movie-popup .movie-popup-info {
+  padding: 1rem .5rem;
+}
+.movie-popup .movie-popup-info p {
+  font-size: .9rem;
+  line-height: 1.6rem;
+  font-weight: 300;
+  font-family: "Poppins", sans-serif;
+  color: rgb(217, 250, 184);
+  margin-bottom: 1rem;
+}
+.source {
+  padding: 0 .5rem;
+  color: white;
+}
+.date {
+  padding: .5rem;
+  color: white;
+}
+.movie-popup .lang {
+  color: white;
+  padding: 0 .5rem;
+}
+.movie-popup .lang span {
+  color: chartreuse;
+  text-transform: uppercase;
+}
+.source span, .date span {
+  font-style: italic;
+  color: #bbb;
+  font-weight: 300;
+  font-size: .8rem;
+}
+.movie-popup .achievement {
+  border-top: 1px solid rgba(255, 255, 255, 0.26);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 8px;
+  padding: .5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+.votes > span, .rating > span {
+  padding: .5rem;
+  font-size: 1.3rem;
+  color: yellow;
+}
+.votes > p, .rating > p {
+  font-size: 1rem;
+  color:rgb(217, 250, 184);
+  padding: .4rem 0;
+}
+.movie-popup .close-btn {
+  position:absolute;
+  top:-2.5rem;
+  right: .5rem;
+  color: var(--white);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: .5rem;
+}
+.movie-popup .close-btn:hover i {
+  transform: scale(1.2);
+}
+
+
+.collection-popup {
+  width: 100%;
+  min-height: 100vh;
+  z-index: 8;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #262626;
+  transform: translateX(100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: 500ms;
+  padding: .8rem;
+}
+.collection-popup.show {
+  transform: translateX(0%);
+  opacity: 1;
+  visibility: visible;
+}
+
+.collection-popup .collection-header {
+  padding: .7rem 0 .2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.collection-popup h2.main-heading {
+  font-size: 1.2rem;
+  padding: 1.7rem .8rem;
+  color: var(--white);
+}
+.collection-popup h2.main-heading span {
+  color: rgb(27, 216, 27);
+  margin: 0 .3rem;
+}
+.collection-popup .close-btn {
+  color: var(--white);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: .5rem;
+  margin-right: 1rem;
+}
+.collection-popup .close-btn:hover i {
+  transform: scale(1.2);
+}
+.collection-popup .buttons {
+  padding: .3rem .5rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.253);
+  border-radius: 10px;
+}
+.collection-popup .buttons button {
+  cursor: pointer;
+  padding: .3rem 1rem;
+  font-size: 1.05rem;
+  border:none;
+  border-radius: 10%;
+  margin-right: .5rem;
+  transition: 500ms;
+}
+.collection-popup .buttons button:nth-child(1) {
+  background-color: turquoise;
+}
+
+.collection-popup .collection-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  align-items: center;
+  gap: .8rem;
+}
+.collection-popup .collection-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: .2rem 0;
+  height: 180px;
+  cursor: pointer;
+  transition: 500ms;
+  border-radius: 5px;
+  border:1px solid rgba(255, 255, 255, 0.486);
+  overflow: auto;
+}
+.collection-popup .collection-content:hover {
+  background-color: #373b69be;
+}
+.collection-popup .collection-body .collection-content .collection-img {
+  width: 100%;
+  height: 100px;
+}
+.collection-popup .collection-body .collection-content .collection-img img {
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+.collection-popup .collection-body .collection-content .collection-info {
+  padding: .5rem;
+  width: 100%;
+  text-align: center;
+}
+.collection-popup .collection-body .collection-content .collection-info h3 {
+  font-weight: 400;
+  letter-spacing: 0.1rem;
+  font-size: 0.8rem;
+  line-height: 1.3rem;
+  color: rgb(214, 214, 137);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+}
+.collection-popup .collection-body .collection-content .collection-info p.release-date {
+  color: #aaa;
+  font-size: 0.7rem;
+  font-weight: 300;
+  margin: .4rem 0;
+}
+.collection-popup .collection-body .collection-content .collection-rating {
+  padding: 0 .5rem;
+  color: chartreuse;
+  font-size: 0.6rem;
+}
+.collection-popup .collection-body .collection-content .collection-rating span:first-child {
+  font-size: .5rem;
+  vertical-align: middle;
+  color: yellow;
+}
+.collection-popup .collection-body .collection-content .collection-rating span i.dark {
+  color: grey;
+}
