@@ -7,6 +7,9 @@ const popularBtn = document.querySelector(".popular");
 const ratedBtn = document.querySelector(".rated");
 const dramaBtn = document.querySelector(".drama");
 
+const nextBtn = document.querySelector(".next")
+const previousBtn = document.querySelector(".previous")
+
 const collectionPopup = document.querySelector(".collection-popup");
 const collectionPopupClose = collectionPopup.querySelector(".close-btn");
 const menuBtn = document.querySelector(".menu");
@@ -33,14 +36,13 @@ collectionPopupClose.addEventListener("click", () => {
   }
 })
 
-
-const popularRated = "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1"; //gotten from somewhere
+let popularRated = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1`; //gotten from somewhere
 
 // const HighestRated = "https://api.themoviedb.org/3/discover/movie/?certification_country=US&certification=R&sort_by=vote_average.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
 
-const BestDrama2021 = "https://api.themoviedb.org/3/discover/movie?with_genres=18&primary_release_year=2021&api_key=04c35731a5ee918f014970082a0088b1&page=1";
+let BestDrama2021 = `https://api.themoviedb.org/3/discover/movie?with_genres=18&primary_release_year=2021&api_key=04c35731a5ee918f014970082a0088b1&page=1`;
 
-const BestFrom2020 = "https://api.themoviedb.org/3/discover/movie?primary_release_year=2020&sort_by=vote_average.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
+let BestFrom2020 = `https://api.themoviedb.org/3/discover/movie?primary_release_year=2020&sort_by=vote_average.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1`;
 
 
 const IMGPATH = 'https://image.tmdb.org/t/p/w1280' //gotten from somewhere
@@ -141,14 +143,54 @@ class UI {
     collectionBody.innerHTML = result;
 
   }
+  nextPreviousBtn(name = popularRated) {
+    let count = 1;
+    nextBtn.addEventListener("click", () => {
+      if (name === popularRated) {
+        count++;
+        let popularRated = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=${count}`;
+        this.toggleLogic(popularRated);
+      } else if ( name === BestFrom2020) {
+        count++;
+        let BestFrom2020 = `https://api.themoviedb.org/3/discover/movie?primary_release_year=2020&sort_by=vote_average.desc&api_key=04c35731a5ee918f014970082a0088b1&page=${count}`;
+        this.toggleLogic(BestFrom2020);
+      } else if ( name === BestDrama2021) {
+        count++;
+        let BestDrama2021 = `https://api.themoviedb.org/3/discover/movie?with_genres=18&primary_release_year=2021&api_key=04c35731a5ee918f014970082a0088b1&page=${count}`;
+        this.toggleLogic(BestDrama2021);
+      }
+    })
+    previousBtn.addEventListener("click", () => {
+      if (count > 1) {
+      if (name === popularRated) {
+        count--;
+        let popularRated = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=${count}`;
+        this.toggleLogic(popularRated);
+      } else if ( name === BestFrom2020) {
+        count--;
+        let BestFrom2020 = `https://api.themoviedb.org/3/discover/movie?primary_release_year=2020&sort_by=vote_average.desc&api_key=04c35731a5ee918f014970082a0088b1&page=${count}`;
+        this.toggleLogic(BestFrom2020);
+      } else if ( name === BestDrama2021) {
+        count--;
+        let BestDrama2021 = `https://api.themoviedb.org/3/discover/movie?with_genres=18&primary_release_year=2021&api_key=04c35731a5ee918f014970082a0088b1&page=${count}`;
+        this.toggleLogic(BestDrama2021);
+      }
+    }
+    })
+
+    this.toggleLogic(name)
+  }
   toggleBtns() {
     popularBtn.addEventListener("click", () => {
+      this.nextPreviousBtn(popularRated);
       this.toggleLogic(popularRated)
     })
     ratedBtn.addEventListener("click", () => {
+      this.nextPreviousBtn(BestFrom2020)
       this.toggleLogic(BestFrom2020);
     })
     dramaBtn.addEventListener("click", () => {
+      this.nextPreviousBtn(BestDrama2021);
       this.toggleLogic(BestDrama2021);
     })
   }
@@ -185,10 +227,6 @@ class UI {
         }
       }) 
     }) 
-  }
-
-  setSelections() {
-
   }
 
   addFunctionality(content, id, contentItem) {
@@ -268,7 +306,7 @@ class Store {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-
+  
   const ui = new UI();
 
   ui.getMovies().then(respData => {
@@ -277,7 +315,8 @@ window.addEventListener("DOMContentLoaded", () => {
     Store.saveMovies(moviesArr);
   }).then(() => {
     ui.movieList()
-    // ui.collectionList();
+    ui.nextPreviousBtn()
     ui.toggleBtns()
+    alert("Created by Vickon...")
   })
 })

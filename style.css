@@ -31,7 +31,7 @@ body {
   height: 95vh;
   width: 450px;
   margin: 0 auto;
-  overflow: auto;
+  overflow: hidden auto;
   background-color: #262626;
   border-radius: 10px;
   padding: 0 .5rem;
@@ -209,6 +209,27 @@ main.close {
 .movie-body .movie-content .movie-rating span i.dark {
   color: grey;
 }
+.movie .nextList {
+  padding: 2rem .5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.previous, .next {
+  padding: .5rem 1rem;
+  border-radius: 3px;
+  cursor: pointer;
+  border:none;
+  font-size: 1.1rem;
+  color: white;
+}
+.previous {
+  background-color: tomato;
+}
+.next {
+  background-color: chartreuse;
+}
+
 
 
 .movie-popup-overlay {
