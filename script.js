@@ -36,11 +36,12 @@ collectionPopupClose.addEventListener("click", () => {
 
 const popularRated = "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1"; //gotten from somewhere
 
-const HighestRated = "https://api.themoviedb.org/3/discover/movie/?certification_country=US&certification=R&sort_by=vote_average.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
+// const HighestRated = "https://api.themoviedb.org/3/discover/movie/?certification_country=US&certification=R&sort_by=vote_average.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
 
 const BestDrama2021 = "https://api.themoviedb.org/3/discover/movie?with_genres=18&primary_release_year=2021&api_key=04c35731a5ee918f014970082a0088b1&page=1";
 
-// const BestFrom2018 = "https://api.themoviedb.org/3/discover/movie?primary_release_year=2018&sort_by=vote_average.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
+const BestFrom2020 = "https://api.themoviedb.org/3/discover/movie?primary_release_year=2020&sort_by=vote_average.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
+
 
 const IMGPATH = 'https://image.tmdb.org/t/p/w1280' //gotten from somewhere
 
@@ -145,7 +146,7 @@ class UI {
       this.toggleLogic(popularRated)
     })
     ratedBtn.addEventListener("click", () => {
-      this.toggleLogic(HighestRated);
+      this.toggleLogic(BestFrom2020);
     })
     dramaBtn.addEventListener("click", () => {
       this.toggleLogic(BestDrama2021);
