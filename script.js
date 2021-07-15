@@ -258,6 +258,8 @@ const ui = new UI();
 window.addEventListener("DOMContentLoaded", () => {
   let popularCount, DramaCount, BestCount;
   popularCount = DramaCount = BestCount = 1;
+
+  alert("created by Vickon...")
   
   moviesFunc(popularRated + "1", 1);
 
