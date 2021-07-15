@@ -46,6 +46,7 @@ main.close {
 .movie {
   width: 100%;
   z-index:0;
+  position: relative;
 }
 .movie .movie-header {
   padding: .7rem 0 .2rem;
@@ -210,24 +211,52 @@ main.close {
   color: grey;
 }
 .movie .nextList {
-  padding: 2rem .5rem;
+  padding: 1.2rem .5rem;
+  border-radius: 4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(245, 222, 179, 0.8);
+}
+#search {
+  padding: .6rem 1.2rem;
+  border-radius: 6px;
+  background-color: transparent;
+  border: 1px solid black;
+  outline: none;
+  font-size: 1.2rem;
+  font-family: inherit;
+}
+#search::placeholder {
+  color: #333;
+  font-size: 1.1rem;
+}
+#search:focus {
+  background-color: rgba(240, 203, 134, 0.945);
 }
 .previous, .next {
-  padding: .5rem 1rem;
-  border-radius: 3px;
-  cursor: pointer;
+  padding: .5rem .7rem;
+  margin: 0 .5rem;
+  border-radius: 5px;
   border:none;
+  cursor: pointer;
   font-size: 1.1rem;
   color: white;
+  transition: 300ms ease-in;
+  opacity: .8;
 }
-.previous {
-  background-color: tomato;
+.previous.disable, .next.disable {
+  opacity: .4;
+  pointer-events: none;
 }
-.next {
-  background-color: chartreuse;
+.previous { background-color: rgb(192, 53, 3);}
+.next { background-color: green;}
+
+.previous:hover, .next:hover {
+  opacity: 1;
 }
 
 
@@ -440,7 +469,7 @@ span.watched-id {
   align-items: center;
 }
 .collection-popup h2.main-heading {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   padding: 1.7rem .8rem;
   color: var(--white);
 }
@@ -503,7 +532,7 @@ span.watched-id {
 .collection-popup .collection-body .collection-content .collection-info h3 {
   font-weight: 400;
   letter-spacing: 0.1rem;
-  font-size: 0.8rem;
+  font-size: 1rem;
   line-height: 1.3rem;
   color: rgb(214, 214, 137);
   text-overflow: ellipsis;
@@ -513,17 +542,17 @@ span.watched-id {
 }
 .collection-popup .collection-body .collection-content .collection-info p.release-date {
   color: #aaa;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 300;
   margin: .4rem 0;
 }
 .collection-popup .collection-body .collection-content .collection-rating {
   padding: 0 .5rem;
   color: chartreuse;
-  font-size: 0.6rem;
+  font-size: 0.9rem;
 }
 .collection-popup .collection-body .collection-content .collection-rating span:first-child {
-  font-size: .5rem;
+  font-size: .7rem;
   vertical-align: middle;
   color: yellow;
 }

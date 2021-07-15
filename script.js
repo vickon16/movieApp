@@ -16,6 +16,7 @@ const menuBtn = document.querySelector(".menu");
 const collectionDiv = document.querySelector(".collection-div");
 const collections = document.querySelector(".collections");
 
+
 // select ellipses to open menu icon
 menuBtn.addEventListener("click", () => {
   collectionDiv.classList.toggle("show")
@@ -36,19 +37,23 @@ collectionPopupClose.addEventListener("click", () => {
   }
 })
 
-let popularRated = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1`; //gotten from somewhere
+let popularRated = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=`; //gotten from somewhere
 
 // const HighestRated = "https://api.themoviedb.org/3/discover/movie/?certification_country=US&certification=R&sort_by=vote_average.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
 
-let BestDrama2021 = `https://api.themoviedb.org/3/discover/movie?with_genres=18&primary_release_year=2021&api_key=04c35731a5ee918f014970082a0088b1&page=1`;
+let BestDrama2021 = `https://api.themoviedb.org/3/discover/movie?with_genres=18&primary_release_year=2021&api_key=04c35731a5ee918f014970082a0088b1&page=`;
 
-let BestFrom2020 = `https://api.themoviedb.org/3/discover/movie?primary_release_year=2020&sort_by=vote_average.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1`;
+let BestFrom2020 = `https://api.themoviedb.org/3/discover/movie?primary_release_year=2020&sort_by=vote_average.desc&api_key=04c35731a5ee918f014970082a0088b1&page=`;
 
+let SearchAPI = `https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=`;
 
 const IMGPATH = 'https://image.tmdb.org/t/p/w1280' //gotten from somewhere
 
 const movieBody = document.querySelector(".movie .movie-body");
 const collectionBody = document.querySelector(".collection-body")
+
+const form = document.getElementById("form");
+const search = document.getElementById("search");
 
 let moviesArr = [];
 let watchedArr = [];
@@ -56,15 +61,15 @@ let collectionArr = [];
 
 
 class UI {
-  async getMovies(name = popularRated) {
+  async getMovies(name) {
     const respData = await (await fetch(name)).json();
     moviesArr = [...respData.results];
     return respData;
   }
-  mapItems(respData) {
+  mapItems(respData, num) {
       let mapped = respData.results.map(item =>
         `
-        <div class="movie-content" data-id=${item.id}>
+        <div class="movie-content" data-id=${item.id} data-num=${num}>
           <div class="movie-img">
             <img src="${IMGPATH + item.poster_path}" alt="">
           </div>
@@ -143,65 +148,7 @@ class UI {
     collectionBody.innerHTML = result;
 
   }
-  nextPreviousBtn(name = popularRated) {
-    let count = 1;
-    nextBtn.addEventListener("click", () => {
-      if (name === popularRated) {
-        count++;
-        let popularRated = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=${count}`;
-        this.toggleLogic(popularRated);
-      } else if ( name === BestFrom2020) {
-        count++;
-        let BestFrom2020 = `https://api.themoviedb.org/3/discover/movie?primary_release_year=2020&sort_by=vote_average.desc&api_key=04c35731a5ee918f014970082a0088b1&page=${count}`;
-        this.toggleLogic(BestFrom2020);
-      } else if ( name === BestDrama2021) {
-        count++;
-        let BestDrama2021 = `https://api.themoviedb.org/3/discover/movie?with_genres=18&primary_release_year=2021&api_key=04c35731a5ee918f014970082a0088b1&page=${count}`;
-        this.toggleLogic(BestDrama2021);
-      }
-    })
-    previousBtn.addEventListener("click", () => {
-      if (count > 1) {
-      if (name === popularRated) {
-        count--;
-        let popularRated = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=${count}`;
-        this.toggleLogic(popularRated);
-      } else if ( name === BestFrom2020) {
-        count--;
-        let BestFrom2020 = `https://api.themoviedb.org/3/discover/movie?primary_release_year=2020&sort_by=vote_average.desc&api_key=04c35731a5ee918f014970082a0088b1&page=${count}`;
-        this.toggleLogic(BestFrom2020);
-      } else if ( name === BestDrama2021) {
-        count--;
-        let BestDrama2021 = `https://api.themoviedb.org/3/discover/movie?with_genres=18&primary_release_year=2021&api_key=04c35731a5ee918f014970082a0088b1&page=${count}`;
-        this.toggleLogic(BestDrama2021);
-      }
-    }
-    })
-
-    this.toggleLogic(name)
-  }
-  toggleBtns() {
-    popularBtn.addEventListener("click", () => {
-      this.nextPreviousBtn(popularRated);
-      this.toggleLogic(popularRated)
-    })
-    ratedBtn.addEventListener("click", () => {
-      this.nextPreviousBtn(BestFrom2020)
-      this.toggleLogic(BestFrom2020);
-    })
-    dramaBtn.addEventListener("click", () => {
-      this.nextPreviousBtn(BestDrama2021);
-      this.toggleLogic(BestDrama2021);
-    })
-  }
-
-  async toggleLogic(name) {
-      const respData = await this.getMovies(name);
-      this.mapItems(respData);
-      moviesArr = [...respData.results]
-      Store.saveMovies()
-      this.movieList()
-  }
+ 
 
   movieList() {
     const movieContent = [...movieBody.children];
@@ -305,18 +252,76 @@ class Store {
 
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  
-  const ui = new UI();
 
-  ui.getMovies().then(respData => {
-    ui.mapItems(respData);
-    ui.mappedCollectionPopup();
-    Store.saveMovies(moviesArr);
-  }).then(() => {
-    ui.movieList()
-    ui.nextPreviousBtn()
-    ui.toggleBtns()
-    alert("Created by Vickon...")
+const ui = new UI();
+
+window.addEventListener("DOMContentLoaded", () => {
+  let popularCount, DramaCount, BestCount;
+  popularCount = DramaCount = BestCount = 1;
+  
+  moviesFunc(popularRated + "1", 1);
+
+  popularBtn.addEventListener("click", () => {
+    moviesFunc(popularRated + "1", 1)
   })
+  ratedBtn.addEventListener("click", () => {
+    moviesFunc(BestFrom2020 + "1", 2)
+  })
+  dramaBtn.addEventListener("click", () => {
+    moviesFunc(BestDrama2021 + "1", 3);
+  })
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const searchTerm = search.value;
+    moviesFunc(SearchAPI + searchTerm, 4)
+    search.value = "";
+    previousBtn.classList.add("disable");
+    nextBtn.classList.add("disable");
+  })
+
+  nextBtn.addEventListener("click", () => {
+    const num = movieBody.children[0].dataset.num;
+    if (num === "1") {
+      popularCount++;
+      moviesFunc(popularRated + `${popularCount}`, 1)
+    }
+    if (num === "2") {
+      BestCount++;
+      moviesFunc(BestFrom2020 + `${BestCount}`, 2)
+    }
+    if (num === "3") {
+      DramaCount++;
+      moviesFunc(BestDrama2021 + `${DramaCount}`, 3)
+    }
+    
+  })
+
+  previousBtn.addEventListener("click", () => {
+    const num = movieBody.children[0].dataset.num;
+    if (num === "1" && popularCount > 1) {
+        popularCount--;
+        moviesFunc(popularRated + `${popularCount}`, 1)
+    }
+    if (num === "2" && BestCount > 1) {
+      BestCount--;
+      moviesFunc(BestFrom2020 + `${BestCount}`, 2)
+    }
+    if (num === "3" && DramaCount > 1) {
+      DramaCount--;
+      moviesFunc(BestDrama2021 + `${DramaCount}`, 3)
+    }
+  })
+  
 })
+
+async function moviesFunc(name, num) {
+  previousBtn.classList.remove("disable");
+  nextBtn.classList.remove("disable");
+
+  const respData = await ui.getMovies(name);
+  ui.mapItems(respData, num);
+  ui.mappedCollectionPopup();
+  Store.saveMovies(moviesArr);
+  ui.movieList();
+}
